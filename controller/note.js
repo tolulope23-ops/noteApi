@@ -1,7 +1,6 @@
-// const express = require('express');
 const Note = require("../models/notes.js");
 const {StatusCodes} = require("http-status-codes");
-// const router = require('../routes/note.js');
+
 
 const addNote = async (req,res) => {
     try {
@@ -15,43 +14,63 @@ const addNote = async (req,res) => {
             data:note,
         });
     } catch (error) {
-        console.log(error.message);
-        res.statusCode(StatusCodes.BAD_REQUEST).json({
+        console.log(error.message); //for developers
+        res.status(StatusCodes.BAD_REQUEST).json({
             success:false,
             statusCode:StatusCodes.BAD_REQUEST,
             message:error.message,
-        })
+            data:{},
+        });
     }
-}
-
-// module.exports = addNote;
+};
 
 const getNotes = async (req, res) =>{
     try {
        const notes = await Note.find();
-       if(notes.length === 0){
-        return res.status(200).json({message: "Notes not added"})
-       }
-       res.status(200).json(notes);
+       res.status(StatusCodes.OK).json({
+        success: true,
+        statusCode:StatusCodes.OK,
+        message: "",
+        data: notes,
+       });
     } catch (error) {
-        res.status(400).json({msg:error.message});
+        res.status(StatusCodes.BAD_REQUEST).json({
+            success:false,
+            statusCode:StatusCodes.BAD_REQUEST,
+            message:error.message,
+            data:{},
+    });
+    }
+};
+const getNote = async(req, res) =>{
+    const {id} = req.params;
+    try {
+        const note = await Note.findById(id);
+        if(!note){
+            return res.status(StatusCodes.NOT_FOUND).json({
+        success: true,
+        statusCode:StatusCodes.OK,
+        message:"Note not present",
+        data:{},
+    });
+}
+        res.status(StatusCodes.OK).json({
+            success:true,
+            statusCode:StatusCodes.OK,
+            message:"",
+            data:note,
+        });
+        console.log(note); //For developer
+    } catch (error) {
+        res.status(StatusCodes.BAD_REQUEST).json({
+            success:false,
+            statusCode:StatusCodes.BAD_REQUEST,
+            message:error.message,
+            data:{},
+        });
     }
 };
 
-const getNote = async(req, res) =>{
-    const {id} = req.params;
-    // console.log(req.params);
-    try {
-        const note = await Note.findById(id);
-        if(!note)
-            return res.status(404).json({msg: "Note not found."});
-        res.status(200).json(note);
-    } catch (error) {
-        res.status(400).json({msg:error.message});
-    }
-}
-
-// Done by me,main difference the new keyword
 // const editNote = async(req, res) =>{
 //     try{
 //         const {id} = req.params;
@@ -68,33 +87,64 @@ const getNote = async(req, res) =>{
 //     }
 // }
 
-//Done in class
+                                         // OR
+    // main difference the new keyword to update the database immediately after sending the request
+
 const editNote = async(req, res) =>{
     try{
         const {id} = req.params;
         const{title, content} = req.body;
         const updatedNote = await Note.findByIdAndUpdate(id, {title, content}, {new:true});
         if(!updatedNote){
-            return res.status(404).json({message:`Cannot find note the the ID ${id}`});
+            return res.status(StatusCodes.NOT_FOUND).json({
+                success:false,
+                statusCode:StatusCodes.NOT_FOUND,
+                message:`Cannot find note with the ID ${id}`,
+                data:{},
+            });        
         }
-         res.status(200).json({msg: "Note updated Successfully"});
-         console.log(updatedNote);
-         
+         res.status(StatusCodes.OK).json({
+            success:true,
+            statusCode:StatusCodes.OK,
+            message: "Note updated Successfully",
+            data:updatedNote,
+        });
+         console.log(updatedNote); //For developer
     }catch(error){
-        res.status(400).json({msg: error.message});
+        res.status(StatusCodes.BAD_REQUEST).json({
+            success:false,
+            statusCode:StatusCodes.BAD_REQUEST,
+            message: error.message,
+            data:{},
+        });
     }
-}
+};
 
 const deleteNote = async(req, res) =>{
     try {
         const {id} = req.params;
         const note = await Note.findByIdAndDelete(id);
         if(!note){
-            return res.status(404).json({message:`Cannot find note for ID ${id}`});
-        }
-        res.status(200).json({message: "Note deleted successfully"});
+            return res.status(StatusCodes.NOT_FOUND).json({
+                success:false,
+                statusCode:StatusCodes.NOT_FOUND,
+                message:`No note Found`,
+                data:{},
+        });
+    }
+    res.status(StatusCodes.OK).json({
+        success:true,
+        statusCode:StatusCodes.OK,
+        message: "Note deleted Successfully",
+        data:{},
+    });
     } catch (error) {
-        
+        res.status(StatusCodes.BAD_REQUEST).json({
+            success:false,
+            statusCode:StatusCodes.BAD_REQUEST,
+            message: error.message,
+            data:{},
+        });
     }
 }
 

@@ -19,7 +19,7 @@
 // METHODS IN BACKEND DEVELOPER(REST API)
 // GET POST PUT DELETE PATCH
 // GET:Retrieves resources from a server
-// POST: To sent something to the server, i.e a data sent after signing up in a webapp
+// POST: To send something to the server, i.e a data sent after signing up in a webapp
 // PUT:To update all data that has existed before, with a new data
 // DELETE: To delete a data in a server 
 // PATCH: To update a specific data from a database, unlike put which reqires you to update the entire data,
