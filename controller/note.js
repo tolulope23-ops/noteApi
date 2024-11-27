@@ -10,7 +10,7 @@ const addNote = async (req,res) => {
         res.status(StatusCodes.CREATED).json({
             success: true,
             statusCode:StatusCodes.CREATED,
-            message:"Note added successfully",
+            message:"Note(s) added successfully",
             data:note,
         });
     } catch (error) {
@@ -71,25 +71,6 @@ const getNote = async(req, res) =>{
     }
 };
 
-// const editNote = async(req, res) =>{
-//     try{
-//         const {id} = req.params;
-//         const note = await Note.findByIdAndUpdate(id, req.body);
-//         if(!note){
-//             return res.status(404).json({message:`Cannot find note the the ID ${id}`});
-//         }
-//         const updatedData = await Note.findById(note);
-//          res.status(200).json(updatedData);
-//          console.log(updatedData);
-         
-//     }catch(error){
-//         res.status(400).json({msg: error.message});
-//     }
-// }
-
-                                         // OR
-    // main difference the "new keyword" to update the database immediately after sending the request
-
 const editNote = async(req, res) =>{
     try{
         const {id} = req.params;
@@ -128,7 +109,7 @@ const deleteNote = async(req, res) =>{
             return res.status(StatusCodes.NOT_FOUND).json({
                 success:false,
                 statusCode:StatusCodes.NOT_FOUND,
-                message:`No note Found`,
+                message:'Note not present',
                 data:{},
         });
     }
