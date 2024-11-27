@@ -88,7 +88,7 @@ const getNote = async(req, res) =>{
 // }
 
                                          // OR
-    // main difference the new keyword to update the database immediately after sending the request
+    // main difference the "new keyword" to update the database immediately after sending the request
 
 const editNote = async(req, res) =>{
     try{

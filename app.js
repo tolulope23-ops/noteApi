@@ -10,7 +10,6 @@ const noteRoutes = require("./routes/note.js");
 
 const PORT = process.env.PORT;
 
-
 app.use(express.json());
 app.use(cors());
 app.use("/api/v1/notes", noteRoutes);
