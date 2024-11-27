@@ -1,21 +1,12 @@
-const {body, validationResult} = require("express-validator");
+const {body, validationResult} = require('express-validator');
 
-const validate = [body("title").isEmpty()
-    .withMessage("Title is required for note.")
-    .isLength({min:3}).withMessage("Minimum of 3 characters.")
-    ,body("content").optional().isLength({min:5})
+const validateNote = [body("title").notEmpty().withMessage("Title is required for note.").trim()
+    .isLength({min:3}).withMessage("Minimum of 3 characters."),
+    body("content").optional().isLength({min:5})
     .withMessage("Minimum of 5 characters.")];
 
-const check = async(req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array()});
-}
-}
 
-module.exports = {validate, check}
-
-
+module.exports = {validateNote};
 
 
 

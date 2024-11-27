@@ -1,10 +1,14 @@
 const Note = require("../models/notes.js");
 const {StatusCodes} = require("http-status-codes");
-
+const {body, validationResult} = require('express-validator');
 
 const addNote = async (req,res) => {
     try {
         const {title, content} = req.body;
+        const error = validationResult(req);
+    if (!error.isEmpty()){
+      return res.status(400).json({errors:error.array()})
+    };
         const note = new Note({title, content});
         await note.save();
         res.status(StatusCodes.CREATED).json({
@@ -60,12 +64,11 @@ const getNote = async(req, res) =>{
             message:"",
             data:note,
         });
-        console.log(note); //For developer
     } catch (error) {
         res.status(StatusCodes.BAD_REQUEST).json({
             success:false,
             statusCode:StatusCodes.BAD_REQUEST,
-            message:error.message,
+            message:`Yeap ${error.message}`,
             data:{},
         });
     }
@@ -75,6 +78,10 @@ const editNote = async(req, res) =>{
     try{
         const {id} = req.params;
         const{title, content} = req.body;
+        const error = validationResult(req);
+        if (!error.isEmpty()){
+          return res.status(400).json({errors:error.array()})
+        };
         const updatedNote = await Note.findByIdAndUpdate(id, {title, content}, {new:true});
         if(!updatedNote){
             return res.status(StatusCodes.NOT_FOUND).json({
@@ -90,7 +97,6 @@ const editNote = async(req, res) =>{
             message: "Note updated Successfully",
             data:updatedNote,
         });
-         console.log(updatedNote); //For developer
     }catch(error){
         res.status(StatusCodes.BAD_REQUEST).json({
             success:false,

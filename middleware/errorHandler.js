@@ -5,7 +5,6 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     statusCode: err.statusCode || StatusCodes.INTERNAL_SERVER_ERROR,
     message: err.message || "Something went wrong, try again later",
   };
-
   if (err.name === "ValidationError") {
     Object.values(err.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message;
