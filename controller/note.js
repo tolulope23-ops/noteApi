@@ -2,7 +2,7 @@ const Note = require("../models/notes.js");
 const {StatusCodes} = require("http-status-codes");
 const {body, validationResult} = require('express-validator');
 
-const addNote = async (req,res) => {
+const addNote = async (req, res) => {
     try {
         const {title, content} = req.body;
         const error = validationResult(req);
