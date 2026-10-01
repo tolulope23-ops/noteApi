@@ -4,6 +4,10 @@ A RESTful backend API for creating, reading, updating, and deleting personal not
 
 The project is built with **Node.js, Express.js, MongoDB, and Mongoose**, with a focus on clean API structure, database interaction, error handling, and frontend-backend integration.
 
+## Preview
+
+![Note App Preview](./assets/note-app-preview.png)
+
 ## Features
 
 * Create a note
