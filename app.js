@@ -16,8 +16,6 @@ app.use(cors());
 app.use(errorHandlerMiddleware);
 app.use("/api/v1/notes", noteRoutes);
 
-app.use(cors({origin: process.env.FRONTEND_URL}));
-
 const start = async () =>{
    try{ 
         await connectDB();
