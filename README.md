@@ -46,7 +46,7 @@ Request body:
 
 ## Example Response
 
-A successful request to retrieve a note may return:
+A successful request to add a note may return:
 
 ```json
 {
