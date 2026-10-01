@@ -27,7 +27,7 @@ The project is built with **Node.js, Express.js, MongoDB, and Mongoose**, with a
 | Mongoose   | MongoDB ODM                     |
 
 
-## API Endpoints
+## API Endpoint, Example
 
 ### 3. Create a Note
 
